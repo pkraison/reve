@@ -10,12 +10,12 @@
     <arg name="config" default="params_demo_dataset"/>
     <arg name="calibration" default="$(find radar_ego_velocity_estimator)/../demo_datasets/calib_ti_mmwave_rospkg"/>
     <arg name="topic_twist" default="/radar_ego_velocity_estimation_node/twist"/>
-    <arg name="run_without_trigger" default="False"/>
-    <arg name="use_odr" default="False"/>
+    <arg name="run_without_trigger" default="True"/>
+    <arg name="use_odr" default="True"/>
 
     <!--    only required if mode is rosbag-->
     <arg name="dataset_dir" default="$(find radar_ego_velocity_estimator)/../demo_datasets/"/>
-    <arg name="rosbag" default="demo_ti_mmwave_rospkg_format.bag"/>
+    <arg name="rosbag" default="2022-09-15-12-26-47.bag"/>
     <arg name="bag_start" default="0."/>
     <arg name="bag_duration" default="-1"/>
 
@@ -35,12 +35,12 @@
         <param name="topic_twist" value="$(arg topic_twist)" type="string"/>
     </node>
 
-    <node name="velocity_estimation_evaluator" pkg="radar_ego_velocity_estimator" type="velocity_estimation_evaluator.py"
+    <!--<node name="velocity_estimation_evaluator" pkg="radar_ego_velocity_estimator" type="velocity_estimation_evaluator.py"
           output="screen" required="True" if="$(arg do_plot)">
         <rosparam file="$(arg calibration).yaml" command="load" ns=""/>
         <param name="topic_v" value="$(arg topic_twist)" type="string"/>
         <param name="velocity_type" value="Radar Ego Velocity" type="string"/>
-    </node>
+    </node>-->
 </launch>
 
 

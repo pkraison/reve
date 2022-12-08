@@ -31,7 +31,7 @@ RadarEgoVelocityEstimatorRos::RadarEgoVelocityEstimatorRos(ros::NodeHandle nh)
 {
   reconfigure_server_.setCallback(boost::bind(&RadarEgoVelocityEstimatorRos::reconfigureCallback, this, _1, _2));
 
-  run_without_trigger = false;
+  run_without_trigger = true;
   getRosParameter(nh, kPrefix, RosParameterType::Recommended, "run_without_trigger", run_without_trigger);
 
   if (run_without_trigger)
@@ -40,22 +40,22 @@ RadarEgoVelocityEstimatorRos::RadarEgoVelocityEstimatorRos(ros::NodeHandle nh)
   std::string topic_twist = "twist";
   getRosParameter(nh, kPrefix, RosParameterType::Recommended, "topic_twist", topic_twist);
 
-  std::string topic_radar_scan = "/sensor_platform/radar/scan";
+  std::string topic_radar_scan = "/mmWaveDataHdl/RScan";
   getRosParameter(nh, kPrefix, RosParameterType::Recommended, "topic_radar_scan", topic_radar_scan);
 
-  std::string topic_radar_trigger = "/sensor_platform/radar/trigger";
-  getRosParameter(nh, kPrefix, RosParameterType::Recommended, "topic_radar_trigger", topic_radar_trigger);
+  //std::string topic_radar_trigger = "/sensor_platform/radar/trigger";
+  //getRosParameter(nh, kPrefix, RosParameterType::Recommended, "topic_radar_trigger", topic_radar_trigger);
 
-  std::string topic_twist_ego_ground_truth = "/ground_truth/twist_radar";
-  getRosParameter(
-      nh, kPrefix, RosParameterType::Recommended, "topic_twist_radar_ground_truth", topic_twist_ego_ground_truth);
+  //std::string topic_twist_ego_ground_truth = "/ground_truth/twist_radar";
+  //getRosParameter(
+  //    nh, kPrefix, RosParameterType::Recommended, "topic_twist_radar_ground_truth", topic_twist_ego_ground_truth);
 
   sub_radar_scan_ = nh.subscribe<sensor_msgs::PointCloud2>(
       topic_radar_scan, 50, &RadarEgoVelocityEstimatorRos::callbackRadarScan, this);
-  sub_radar_trigger_ = nh.subscribe<std_msgs::Header>(
-      topic_radar_trigger, 50, &RadarEgoVelocityEstimatorRos::callbackRadarTrigger, this);
+  //sub_radar_trigger_ = nh.subscribe<std_msgs::Header>(
+  //    topic_radar_trigger, 50, &RadarEgoVelocityEstimatorRos::callbackRadarTrigger, this);
   pub_twist_              = nh.advertise<geometry_msgs::TwistWithCovarianceStamped>(topic_twist, 5);
-  pub_twist_ground_truth_ = nh.advertise<geometry_msgs::TwistStamped>(topic_twist_ego_ground_truth, 5);
+  //pub_twist_ground_truth_ = nh.advertise<geometry_msgs::TwistStamped>(topic_twist_ego_ground_truth, 5);
 }
 
 void RadarEgoVelocityEstimatorRos::runFromRosbag(const std::string& rosbag_path,

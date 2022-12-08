@@ -30,7 +30,7 @@ struct RadarPointCloudType
   PCL_ADD_POINT4D;      // position in [m]
   float snr_db;         // CFAR cell to side noise ratio in [dB]
   float v_doppler_mps;  // Doppler velocity in [m/s]
-  float noise_db;       // CFAR noise level of the side of the detected cell in [dB]
+  float noise_db;      // CFAR noise level of the side of the detected cell in [dB]
   float range;          // range in [m]
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
@@ -43,7 +43,8 @@ struct mmWaveCloudType
     struct
     {
       float intensity;
-      float velocity;
+      float range;
+      float doppler;
     };
     float data_c[4];
   };
